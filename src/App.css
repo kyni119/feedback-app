@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.header .logo {
+  max-width: 38%;
+}
+
+.confirmation-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background-color: #f0f0f0; 
+  color: #333; 
+  font-family: 'Arial', sans-serif;
+}
+
+.confirmation-page h2 {
+  font-size: 2rem;
+  color: #25AE88; 
+  margin-bottom: 10px;
+}
+
+.confirmation-page p {
+  font-size: 1.2rem;
+  color: #555; 
+  margin-bottom: 20px;
+}
+
+.sucessLogo {
+  width: 200px; 
+  height: auto;
+  margin-top: 20px;
+}
+
+.feedback-page {
+  text-align: center;
+  padding: 20px;
+  color: #333;
+}
+
+.header h1 {
+  color: #ff9900;
+}
+
+.rating-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ffcc00;
+  transition: transform 0.3s;
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+.message-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 18px; 
+}
+
+.rating-image {
+  width: 30px;
+  height: 30px;
+}
+
+.thank-you-message {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.message-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  
+  width: 100%;
+
+}
+
+.submit-button {
+  margin-top: 20px;
+}
+
+.react-button {
+  background-color: #114890 ; 
+  color: white; 
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.react-button:hover {
+  background-color: #114890 ;
+}
+
+footer {
+  margin-top: 20px;
+}
