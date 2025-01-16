@@ -4,6 +4,8 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom"; 
 import { toast, ToastContainer } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css'; 
+import Cookies from "js-cookie"; 
+
 
 const FeedbackPage = ({ companyName }) => {
   const [rating, setRating] = useState(null);
@@ -15,6 +17,7 @@ const FeedbackPage = ({ companyName }) => {
   const navigate = useNavigate(); 
   const location = useLocation(); 
 
+
   useEffect(() => {
    
     const queryParams = new URLSearchParams(location.search);
@@ -22,8 +25,16 @@ const FeedbackPage = ({ companyName }) => {
     setClientName(queryParams.get('firstname'));
     setClientLastName(queryParams.get('lastname'));
     setMatricule(queryParams.get('matricule'));
-  }, [location]); 
 
+   const submittedTicket = Cookies.get('feedbackSubmittedTicket');
+   if (submittedTicket && submittedTicket === numeroTicket) {
+     toast.info("Vous avez déjà soumis un avis pour ce ticket.");
+     navigate("/confirmation", { replace: true });
+   }
+  }, [location,navigate,numeroTicket]); 
+
+  
+ 
   const handleRatingClick = (value) => {
     setRating(value);
   };
@@ -45,15 +56,15 @@ const FeedbackPage = ({ companyName }) => {
   const getMessageAndImage = (rating) => {
     switch (rating) {
       case 1:
-        return { message: "Très Mécontent", image: "/images/insatisfait.png" };
+        return { message: "Très Mécontent", image: "/Images/insatisfait.png" };
       case 2:
-        return { message: "Insatisfait", image: "/images/triste.png" };
+        return { message: "Insatisfait", image: "/Images/triste.png" };
       case 3:
-        return { message: "Neutre", image: "/images/neutre.png" };
+        return { message: "Neutre", image: "/Images/neutre.png" };
       case 4:
-        return { message: "Satisfait", image: "/images/content.png" };
+        return { message: "Satisfait", image: "/Images/content.png" };
       case 5:
-        return { message: "Très satisfait", image: "/images/tresbien.png" };
+        return { message: "Très satisfait", image: "/Images/tresbien.png" };
       default:
         return { message: "", image: null };
     }
@@ -82,12 +93,12 @@ const FeedbackPage = ({ companyName }) => {
       });
   
       console.log("Payload:", payload);
-  
       if (response.ok) {
         const responseData = await response.json(); 
         console.log("Réponse de l'API:", responseData);
   
         if (responseData.errorCode === 0) {
+           Cookies.set('feedbackSubmittedTicket', numeroTicket, { expires: 365 }); 
           setShowMessage(true);
           toast.success("Merci pour votre aide !");
           navigate("/confirmation", { replace: true });
