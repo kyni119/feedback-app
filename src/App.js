@@ -70,35 +70,33 @@ const FeedbackPage = ({ companyName }) => {
     }
   };
 
+ 
+
+  {/*}
   const handleSubmit = async () => {
     if (rating === null) {
       toast.error("Veuillez sélectionner une note.");
       return;
     }
   
-    const payload = {
+    const params = new URLSearchParams({
       firstname: firstName,
       lastname: lastName,
       numeroticket: numeroTicket,
       avis: rating
-    };
+    });
   
     try {
-      const response = await fetch("http://5.9.195.245:9050/appsapis/AddAvis", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+    
+      const response = await fetch(`http://5.9.195.246/managerapis/scripts/avis_reclamation.php?${params.toString()}`);
+      const responseData = await response.json();
+      console.log(responseData);
   
-      console.log("Payload:", payload);
       if (response.ok) {
-        const responseData = await response.json(); 
-        console.log("Réponse de l'API:", responseData);
-  
+        const responseData = await response.json();
+        console.log(responseData);
         if (responseData.errorCode === 0) {
-           Cookies.set('feedbackSubmittedTicket', numeroTicket, { expires: 365 }); 
+          Cookies.set('feedbackSubmittedTicket', numeroTicket, { expires: 365 });
           setShowMessage(true);
           toast.success("Merci pour votre aide !");
           navigate("/confirmation", { replace: true });
@@ -109,10 +107,52 @@ const FeedbackPage = ({ companyName }) => {
         toast.error("Erreur lors de la communication avec le serveur. Veuillez réessayer.");
       }
     } catch (error) {
-      console.error("Erreur API:", error);
+      toast.error("Une erreur s'est produite. Veuillez réessayer.");
+    }
+  };*/}
+
+
+  const handleSubmit = async () => {
+    if (rating === null) {
+      toast.error("Veuillez sélectionner une note.");
+      return;
+    }
+  
+    const params = new URLSearchParams({
+      firstname: firstName,
+      lastname: lastName,
+      numeroticket: numeroTicket,
+      avis: rating
+    });
+  
+    try {
+      
+      const url = `http://5.9.195.246/managerapis/scripts/avis_reclamation.php?${params.toString()}`;
+
+      const response = await fetch(url);
+      
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData); 
+        if (responseData.errorCode === 0) {
+          Cookies.set('feedbackSubmittedTicket', numeroTicket, { expires: 365 });
+          setShowMessage(true);
+          toast.success("Merci pour votre aide !");
+          navigate("/confirmation", { replace: true });
+        } else {
+          toast.error("Erreur lors de l'enregistrement de la note. Veuillez réessayer.");
+        }
+      } else {
+        toast.error("Erreur lors de la communication avec le serveur. Veuillez réessayer.");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'appel à l'API : ", error);
       toast.error("Une erreur s'est produite. Veuillez réessayer.");
     }
   };
+  
+  
 
   return (
     <div className="feedback-page">
